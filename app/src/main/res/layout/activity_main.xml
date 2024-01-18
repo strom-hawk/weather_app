@@ -8,5 +8,86 @@
     tools:context=".landing.LandingActivity"
     tools:viewBindingIgnore="false">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp">
+
+        <TextView
+            android:id="@+id/tvMainTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:letterSpacing="0"
+            android:text="0"
+            android:textSize="96sp" />
+
+        <ImageView
+            android:id="@+id/ivTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/tvMainTemp"
+            android:src="@drawable/ic_degree"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvCityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvMainTemp"
+            android:layout_centerHorizontal="true"
+            android:letterSpacing="0"
+            android:text="Bangalore"
+            android:textSize="36sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <include
+                android:id="@+id/layoutFirstDay"
+                layout="@layout/layout_day_and_temp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+            <include
+                android:id="@+id/layoutSecondDay"
+                layout="@layout/layout_day_and_temp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+            <include
+                android:id="@+id/layoutThirdDay"
+                layout="@layout/layout_day_and_temp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+            <include
+                android:id="@+id/layoutForthDay"
+                layout="@layout/layout_day_and_temp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

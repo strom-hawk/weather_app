@@ -13,4 +13,8 @@ class WeatherApi(
 ) {
     suspend fun getCurrentWeatherInfo(): CurrentWeatherModel =
         httpClient.get("https://api.openweathermap.org/data/2.5/weather?q=Bengaluru&APPID=9b8cb8c7f11c077f8c4e217974d9ee40")
+
+
+    suspend fun getForecastInfo(): ForecastModel =
+        httpClient.get("https://api.openweathermap.org/data/2.5/forecast?q=Bengaluru&APPID=9b8cb8c7f11c077f8c4e217974d9ee40")
 }

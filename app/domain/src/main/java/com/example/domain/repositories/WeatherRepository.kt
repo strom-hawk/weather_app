@@ -8,4 +8,5 @@ import com.example.domain.data.ForecastModel
  */
 interface WeatherRepository {
     suspend fun getCurrentWeatherInfo(): CurrentWeatherModel
+    suspend fun getForecastInfo(): ForecastModel
 }

@@ -8,5 +8,26 @@ import kotlinx.serialization.Serializable
  */
 @Keep
 @Serializable
-class ForecastModel {
-}
+data class ForecastModel(
+    val list: List<DayDataModel>
+)
+
+@Keep
+@Serializable
+data class DayDataModel(
+    val dt: Long,
+    val main: MainForecast
+)
+
+@Keep
+@Serializable
+data class MainForecast(
+    val temp: Double,
+)
+
+@Keep
+@Serializable
+data class ForeCastUIModel(
+    val name: String,
+    val temp: String
+)

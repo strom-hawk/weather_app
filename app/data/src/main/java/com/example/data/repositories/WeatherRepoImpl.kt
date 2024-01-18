@@ -13,4 +13,5 @@ class WeatherRepoImpl @Inject constructor(
     private val api: WeatherApi
 ): WeatherRepository {
     override suspend fun getCurrentWeatherInfo(): CurrentWeatherModel = api.getCurrentWeatherInfo()
+    override suspend fun getForecastInfo(): ForecastModel = api.getForecastInfo()
 }
