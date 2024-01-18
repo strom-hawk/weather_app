@@ -1,6 +1,7 @@
 package com.example.weatherapp.landing
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.databinding.ActivityMainBinding
@@ -21,27 +22,25 @@ class LandingActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        viewModel.getCurrentWeatherInfo()
-        viewModel.getForecastInfo()
+        hitApi()
         super.onResume()
     }
 
     private fun bindViews() {
         viewModel.showSnackBar.observe(this) {
+            hideProgressBar()
             if(it) {
                 Snackbar.make(binding.root, "Something went wrong", Snackbar.LENGTH_LONG)
                     .setAction("Retry") { }
                     .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
-                    .setAction("Retry"){
-                        viewModel.getForecastInfo()
-                        viewModel.getCurrentWeatherInfo()
-                    }
+                    .setAction("Retry"){ hitApi() }
                     .show()
             }
         }
 
         viewModel.imageListLiveData.observe(this) {
             binding.tvMainTemp.text = it
+            hideProgressBar()
         }
 
         viewModel.foreCastList.observe(this) {
@@ -56,7 +55,20 @@ class LandingActivity : AppCompatActivity() {
 
             binding.layoutForthDay.tvDay.text = it[3].name
             binding.layoutForthDay.tvDayTemp.text = it[3].temp
+            hideProgressBar()
         }
 
+    }
+
+    private fun hitApi() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.mainLayout.visibility = View.GONE
+        viewModel.getForecastInfo()
+        viewModel.getCurrentWeatherInfo()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        binding.mainLayout.visibility = View.VISIBLE
     }
 }
