@@ -1,17 +1,12 @@
 package com.example.weatherapp.landing
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.viewModels
-import androidx.lifecycle.MutableLiveData
-import com.example.weatherapp.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LandingActivity : AppCompatActivity() {
@@ -32,6 +27,19 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
+        viewModel.showSnackBar.observe(this) {
+            if(it) {
+                Snackbar.make(binding.root, "Something went wrong", Snackbar.LENGTH_LONG)
+                    .setAction("Retry") { }
+                    .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
+                    .setAction("Retry"){
+                        viewModel.getForecastInfo()
+                        viewModel.getCurrentWeatherInfo()
+                    }
+                    .show()
+            }
+        }
+
         viewModel.imageListLiveData.observe(this) {
             binding.tvMainTemp.text = it
         }

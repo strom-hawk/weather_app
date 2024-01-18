@@ -18,7 +18,12 @@ class WeatherUseCase(
     private val timeStampFor24Hrs = 86400
     private val kelvinDifference = 273.15
 
-    suspend fun getCurrentWeatherInfo() = repo.getCurrentWeatherInfo()
+    suspend fun getCurrentWeatherInfo(): String {
+        val response = repo.getCurrentWeatherInfo()
+        val tempInFahrenheit = response.main.temp
+        return (tempInFahrenheit.toInt() - kelvinDifference.toInt()).toString()
+    }
+
     suspend fun getForecastInfo(): List<ForeCastUIModel> {
         val foreCastList = mutableListOf<ForeCastUIModel>()
         val response = repo.getForecastInfo()

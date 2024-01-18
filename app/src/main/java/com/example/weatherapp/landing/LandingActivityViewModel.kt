@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.data.ForeCastUIModel
 import com.example.domain.usecases.WeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,21 +21,27 @@ class LandingActivityViewModel @Inject constructor(
     private val useCase: WeatherUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val kelvinDifference = 273.15
+    val showSnackBar = MutableLiveData<Boolean>()
     val imageListLiveData = MutableLiveData<String>()
     val foreCastList = MutableLiveData<List<ForeCastUIModel>>()
 
     fun getCurrentWeatherInfo() {
-        viewModelScope.launch {
-            val response = useCase.getCurrentWeatherInfo()
-            val tempInFahrenheit = response.main.temp
-            imageListLiveData.value = (tempInFahrenheit.toInt() -kelvinDifference.toInt()).toString()
+        viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { coroutineContext, throwable ->
+            showSnackBar.postValue(true)
+            println("____________${throwable}")
+        }) {
+            imageListLiveData.postValue(useCase.getCurrentWeatherInfo())
+            showSnackBar.postValue(false)
         }
     }
 
     fun getForecastInfo() {
-        viewModelScope.launch {
-            foreCastList.value = useCase.getForecastInfo()
+        viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { coroutineContext, throwable ->
+            showSnackBar.postValue(true)
+            println("____________${throwable}")
+        }) {
+            foreCastList.postValue(useCase.getForecastInfo())
+            showSnackBar.postValue(false)
         }
     }
 }
